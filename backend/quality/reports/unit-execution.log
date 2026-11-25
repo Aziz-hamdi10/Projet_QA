@@ -1,0 +1,124 @@
+
+> backend@1.0.0 test:report
+> jest tests/unit --coverage --runInBand --json --outputFile=quality/reports/unit-results.json
+
+PASS tests/unit/models/schemas.test.js
+  Subscription schema
+    √ accepts valid document (7 ms)
+    √ rejects missing subscriber (1 ms)
+    √ rejects missing subscribedTo (1 ms)
+  avis schema
+    √ accepts valid document (1 ms)
+    √ rejects missing content (2 ms)
+    √ rejects missing rating
+  brand schema
+    √ accepts valid document
+    √ rejects missing title
+    √ rejects missing image (1 ms)
+  color schema
+    √ accepts valid document (1 ms)
+    √ rejects missing name (1 ms)
+    √ rejects missing hexCode
+  commentaire schema
+    √ accepts valid document
+    √ rejects missing userid (1 ms)
+    √ rejects missing message (1 ms)
+  departement schema
+    √ accepts valid document (1 ms)
+    √ rejects missing title
+    √ rejects missing image (1 ms)
+  frais schema
+    √ accepts valid document (1 ms)
+    √ rejects missing value
+  notification schema
+    √ accepts valid document (1 ms)
+    √ rejects missing message
+    √ rejects missing title (1 ms)
+  order schema
+    √ accepts valid document (1 ms)
+    √ rejects missing etat
+    √ rejects missing prixtotal (1 ms)
+  promotion schema
+    √ accepts valid document (1 ms)
+    √ rejects missing title
+    √ rejects missing codepromo (1 ms)
+  size schema
+    √ accepts valid document
+    √ rejects missing name
+  Schema casting and defaults
+    √ order timestamps start null (1 ms)
+    √ order rejects invalid total type (20 ms)
+    √ product casts numeric price (1 ms)
+    √ product rejects invalid category ObjectId
+    √ user datecode defaults to a date
+
+PASS tests/unit/routes/frais.test.js
+  √ creates fees (3 ms)
+  √ returns latest fees (1 ms)
+  √ returns 404 when no fees exist (1 ms)
+  √ handles database error (1 ms)
+
+PASS tests/unit/routes/subscription.test.js
+  √ returns following status for {} (1 ms)
+  √ returns following status for null (1 ms)
+  √ handles subscription lookup failure (1 ms)
+
+PASS tests/unit/routes/veriftoken.test.js
+  √ rejects missing token (1 ms)
+  √ rejects invalid token
+  √ sets userId and continues for verified token (1 ms)
+
+--------------------|---------|----------|---------|---------|--------------------------------------
+File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                    
+--------------------|---------|----------|---------|---------|--------------------------------------
+All files           |    6.64 |     3.07 |    2.11 |    6.69 |                                      
+ backend            |       0 |      100 |       0 |       0 |                                      
+  server.js         |       0 |      100 |       0 |       0 | 1-49                                 
+ backend/config     |       0 |      100 |       0 |       0 |                                      
+  connect.js        |       0 |      100 |       0 |       0 | 1-4                                  
+ backend/models     |   81.96 |      100 |       0 |   81.96 |                                      
+  Product.js        |     100 |      100 |     100 |     100 |                                      
+  Subscription.js   |     100 |      100 |     100 |     100 |                                      
+  admin.js          |       0 |        0 |       0 |       0 |                                      
+  avis.js           |     100 |      100 |     100 |     100 |                                      
+  brand.js          |   55.55 |      100 |       0 |   55.55 | 21-28                                
+  client.js         |       0 |        0 |       0 |       0 |                                      
+  color.js          |     100 |      100 |     100 |     100 |                                      
+  commentaire.js    |     100 |      100 |     100 |     100 |                                      
+  delievry.js       |       0 |        0 |       0 |       0 |                                      
+  departement.js    |     100 |      100 |     100 |     100 |                                      
+  frais.js          |     100 |      100 |     100 |     100 |                                      
+  moderator.js      |       0 |        0 |       0 |       0 |                                      
+  notification.js   |     100 |      100 |     100 |     100 |                                      
+  order.js          |     100 |      100 |     100 |     100 |                                      
+  productpicture.js |       0 |      100 |     100 |       0 | 1-15                                 
+  promotion.js      |     100 |      100 |     100 |     100 |                                      
+  size.js           |     100 |      100 |     100 |     100 |                                      
+  user.js           |     100 |      100 |     100 |     100 |                                      
+  wishlist.js       |       0 |      100 |     100 |       0 | 1-27                                 
+ backend/routes     |    3.58 |     3.07 |    2.15 |     3.6 |                                      
+  Subscription.js   |   29.41 |       20 |   11.11 |    30.3 | 7-22,27-34,38-45,49-66,90-97,101-118 
+  avis.js           |       0 |        0 |       0 |       0 | 1-100                                
+  brand.js          |       0 |        0 |       0 |       0 | 1-118                                
+  color.js          |       0 |        0 |       0 |       0 | 1-117                                
+  commentaire.js    |       0 |        0 |       0 |       0 | 1-112                                
+  departement.js    |       0 |        0 |       0 |       0 | 1-101                                
+  frais.js          |      90 |      100 |     100 |      90 | 16-17                                
+  notifcation.js    |       0 |        0 |       0 |       0 | 1-37                                 
+  order.js          |       0 |        0 |       0 |       0 | 1-607                                
+  payment.js        |       0 |      100 |       0 |       0 | 1-37                                 
+  product.js        |       0 |        0 |       0 |       0 | 1-476                                
+  productpicture.js |       0 |        0 |       0 |       0 | 1-109                                
+  promotion.js      |       0 |        0 |       0 |       0 | 1-148                                
+  sendemail.js      |       0 |        0 |       0 |       0 |                                      
+  size.js           |       0 |        0 |       0 |       0 | 1-100                                
+  user.js           |       0 |        0 |       0 |       0 | 3-600                                
+  veriftoken.js     |     100 |      100 |     100 |     100 |                                      
+  wishlist.js       |       0 |        0 |       0 |       0 | 1-89                                 
+--------------------|---------|----------|---------|---------|--------------------------------------
+Test Suites: 4 passed, 4 total
+Tests:       46 passed, 46 total
+Snapshots:   0 total
+Time:        2.028 s
+Ran all test suites matching tests/unit.
+Test results written to: quality\reports\unit-results.json

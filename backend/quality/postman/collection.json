@@ -1,0 +1,521 @@
+{
+  "info": {
+    "name": "Bridgewear ISO 25010 API tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "size_name",
+      "value": ""
+    },
+    {
+      "key": "size_id",
+      "value": ""
+    },
+    {
+      "key": "color_id",
+      "value": ""
+    },
+    {
+      "key": "promo_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "API-01 Fees create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/frais/addfrais",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"value\": 7}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Fees value\", () => pm.expect(pm.response.json().frais.value).to.eql(7));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-02 Latest fees",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/frais/getLatestFrais"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Latest fees value\", () => pm.expect(pm.response.json().latestFrais.value).to.eql(7));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-03 Create size",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/size/addsize",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"{{size_name}}\"}"
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set(\"size_name\", \"API\" + Date.now());"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Size contract\", () => { const b=pm.response.json(); pm.expect(b.name).to.eql(pm.collectionVariables.get(\"size_name\")); pm.expect(b._id).to.match(/^[a-f0-9]{24}$/i); }); pm.collectionVariables.set(\"size_id\",pm.response.json()._id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-04 List sizes",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/size/getsizes"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Array includes created size\", () => { const b=pm.response.json(); pm.expect(b).to.be.an(\"array\"); pm.expect(b.some(x=>x._id===pm.collectionVariables.get(\"size_id\"))).to.eql(true); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-05 Read size",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/size/getsize/{{size_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Correct ID and name\", () => { const b=pm.response.json(); pm.expect(b._id).to.eql(pm.collectionVariables.get(\"size_id\")); pm.expect(b.name).to.eql(pm.collectionVariables.get(\"size_name\")); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-06 Update size",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/size/updatesize/{{size_id}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"{{size_name}}-updated\"}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Updated name\", () => pm.expect(pm.response.json().name).to.eql(pm.collectionVariables.get(\"size_name\")+\"-updated\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-07 Delete size",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/size/deletesize/{{size_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Deletion message\", () => pm.expect(pm.response.json().message).to.eql(\"Size deleted successfully\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-08 Read deleted size",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/size/getsize/{{size_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Not found contract\", () => pm.expect(pm.response.json().message).to.eql(\"Size not found\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-09 Create color",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/color/addcolor",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"API Blue\", \"hexCode\": \"#0000FF\"}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Color contract\", () => { const b=pm.response.json(); pm.expect(b.hexCode).to.eql(\"#0000FF\"); pm.expect(b._id).to.match(/^[a-f0-9]{24}$/i); }); pm.collectionVariables.set(\"color_id\",pm.response.json()._id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-10 Read color",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/color/getcolor/{{color_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Color ID and value\", () => { const b=pm.response.json(); pm.expect(b._id).to.eql(pm.collectionVariables.get(\"color_id\")); pm.expect(b.hexCode).to.eql(\"#0000FF\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-11 Update color",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/color/modify-color/{{color_id}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"API Red\", \"hexCode\": \"#FF0000\"}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Updated color\", () => pm.expect(pm.response.json().hexCode).to.eql(\"#FF0000\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-12 Delete color",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/color/deletecolor/{{color_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-13 Read deleted color",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/color/getcolor/{{color_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-14 Create promotion",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/promotion/addpromotion",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"API promo\", \"percentage\": 10}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Promotion contract\", () => { const b=pm.response.json(); pm.expect(b.title).to.eql(\"API promo\"); pm.expect(b.codepromo).to.match(/^\\d{6}$/); pm.expect(b.percentage).to.eql(10); }); pm.collectionVariables.set(\"promo_id\",pm.response.json()._id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-15 Read promotion",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/promotion/getpromotion/{{promo_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });",
+              "pm.test(\"Promotion ID and title\", () => { const b=pm.response.json(); pm.expect(b._id).to.eql(pm.collectionVariables.get(\"promo_id\")); pm.expect(b.title).to.eql(\"API promo\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-16 Delete promotion",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/promotion/deletepromotion/{{promo_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "API-17 Read deleted promotion",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/promotion/getpromotion/{{promo_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });",
+              "pm.test(\"JSON response\", function () { pm.response.to.be.json; });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

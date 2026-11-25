@@ -1,0 +1,40 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --runInBand",
+    "test:unit": "jest tests/unit --runInBand",
+    "test:integration": "jest tests/integration --runInBand",
+    "test:coverage": "jest --coverage --runInBand",
+    "test:report": "jest tests/unit --coverage --runInBand --json --outputFile=quality/reports/unit-results.json",
+    "test:integration:report": "jest tests/integration --runInBand --json --outputFile=quality/reports/integration-results.json",
+    "test:api": "newman run quality/postman/collection.json -e quality/postman/environment.json -r cli,json,htmlextra --reporter-json-export quality/reports/api-results.json --reporter-htmlextra-export quality/reports/api-report.html",
+    "test:smoke": "k6 run quality/performance/smoke-test.js",
+    "test:load": "k6 run --summary-export=quality/reports/load-report.json quality/performance/load-test.js",
+    "test:stress": "k6 run --summary-export=quality/reports/stress-report.json quality/performance/stress-test.js",
+    "test:concurrency": "jest tests/concurrency --runInBand --json --outputFile=quality/reports/concurrency-results.json",
+    "test:reliability": "jest tests/reliability --runInBand --json --outputFile=quality/reports/reliability-results.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.5.3",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.8"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "mongodb-memory-server": "^11.4.0",
+    "newman": "^6.2.3",
+    "newman-reporter-htmlextra": "^1.23.1",
+    "supertest": "^7.3.2"
+  }
+}

@@ -1,0 +1,145 @@
+
+> backend@1.0.0 test:coverage
+> jest --coverage --runInBand
+
+PASS tests/integration/commerce.test.js
+  Frais HTTP + MongoDB
+    √ IT-01 creates and persists fees (57 ms)
+    √ IT-02 retrieves latest fees (19 ms)
+    √ IT-03 returns 404 when empty (18 ms)
+  Size HTTP + MongoDB
+    √ IT-04 creates size (18 ms)
+    √ IT-05 lists sizes (19 ms)
+    √ IT-06 reads size by ID (16 ms)
+    √ IT-07 updates size (20 ms)
+    √ IT-08 deletes size (17 ms)
+    √ IT-09 missing size returns 404 (14 ms)
+    √ IT-10 existing name is unavailable (case insensitive) (14 ms)
+  Color HTTP + MongoDB
+    √ IT-11 creates color (16 ms)
+    √ IT-12 modifies color (16 ms)
+    √ IT-13 lists colors (19 ms)
+  Product and promotion HTTP + MongoDB
+    √ IT-14 creates product with existing color and size references (18 ms)
+    √ IT-15 creates promotion with generated code (16 ms)
+    √ IT-16 retrieves promotion by ID (13 ms)
+
+PASS tests/unit/models/schemas.test.js
+  Subscription schema
+    √ accepts valid document (2 ms)
+    √ rejects missing subscriber (4 ms)
+    √ rejects missing subscribedTo (1 ms)
+  avis schema
+    √ accepts valid document
+    √ rejects missing content
+    √ rejects missing rating (1 ms)
+  brand schema
+    √ accepts valid document
+    √ rejects missing title
+    √ rejects missing image (1 ms)
+  color schema
+    √ accepts valid document
+    √ rejects missing name (1 ms)
+    √ rejects missing hexCode (1 ms)
+  commentaire schema
+    √ accepts valid document (1 ms)
+    √ rejects missing userid (1 ms)
+    √ rejects missing message (1 ms)
+  departement schema
+    √ accepts valid document (1 ms)
+    √ rejects missing title (1 ms)
+    √ rejects missing image (1 ms)
+  frais schema
+    √ accepts valid document (1 ms)
+    √ rejects missing value (1 ms)
+  notification schema
+    √ accepts valid document (1 ms)
+    √ rejects missing message (1 ms)
+    √ rejects missing title (1 ms)
+  order schema
+    √ accepts valid document (1 ms)
+    √ rejects missing etat (1 ms)
+    √ rejects missing prixtotal
+  promotion schema
+    √ accepts valid document (1 ms)
+    √ rejects missing title (1 ms)
+    √ rejects missing codepromo (1 ms)
+  size schema
+    √ accepts valid document (1 ms)
+    √ rejects missing name (1 ms)
+  Schema casting and defaults
+    √ order timestamps start null (2 ms)
+    √ order rejects invalid total type (43 ms)
+    √ product casts numeric price (1 ms)
+    √ product rejects invalid category ObjectId (1 ms)
+    √ user datecode defaults to a date
+
+PASS tests/unit/routes/frais.test.js
+  √ creates fees (5 ms)
+  √ returns latest fees (2 ms)
+  √ returns 404 when no fees exist (1 ms)
+  √ handles database error (1 ms)
+
+PASS tests/unit/routes/subscription.test.js
+  √ returns following status for {} (3 ms)
+  √ returns following status for null (2 ms)
+  √ handles subscription lookup failure (1 ms)
+
+PASS tests/unit/routes/veriftoken.test.js
+  √ rejects missing token (3 ms)
+  √ rejects invalid token
+  √ sets userId and continues for verified token
+
+--------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                                                                                                                                   
+--------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+All files           |   24.89 |     5.68 |   11.76 |   25.12 |                                                                                                                                                                                     
+ backend            |       0 |        0 |       0 |       0 |                                                                                                                                                                                     
+  server.js         |       0 |        0 |       0 |       0 | 1-6                                                                                                                                                                                 
+ backend/config     |       0 |      100 |       0 |       0 |                                                                                                                                                                                     
+  connect.js        |       0 |      100 |       0 |       0 | 1-4                                                                                                                                                                                 
+ backend/models     |   93.44 |      100 |       0 |   93.44 |                                                                                                                                                                                     
+  Product.js        |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  Subscription.js   |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  admin.js          |       0 |        0 |       0 |       0 |                                                                                                                                                                                     
+  avis.js           |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  brand.js          |   55.55 |      100 |       0 |   55.55 | 21-28                                                                                                                                                                               
+  client.js         |       0 |        0 |       0 |       0 |                                                                                                                                                                                     
+  color.js          |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  commentaire.js    |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  delievry.js       |       0 |        0 |       0 |       0 |                                                                                                                                                                                     
+  departement.js    |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  frais.js          |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  moderator.js      |       0 |        0 |       0 |       0 |                                                                                                                                                                                     
+  notification.js   |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  order.js          |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  productpicture.js |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  promotion.js      |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  size.js           |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  user.js           |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  wishlist.js       |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+ backend/routes     |   22.13 |     5.76 |   12.06 |   22.29 |                                                                                                                                                                                     
+  Subscription.js   |   29.41 |       20 |   11.11 |    30.3 | 7-22,27-34,38-45,49-66,90-97,101-118                                                                                                                                                
+  avis.js           |   17.54 |        0 |       0 |   18.86 | 8-19,25-47,52-74,78-93                                                                                                                                                              
+  brand.js          |   21.53 |        0 |       0 |   21.53 | 10-13,19-30,34-40,44-54,58-80,84-96,100-113                                                                                                                                         
+  color.js          |   38.33 |       10 |   29.41 |   38.33 | 5-17,33-34,43-44,48-61,65-77,81-94,111,116-117                                                                                                                                      
+  commentaire.js    |   21.15 |        0 |       0 |   21.15 | 9-32,36-68,73-91,96-108                                                                                                                                                             
+  departement.js    |   21.81 |        0 |       0 |   21.81 | 9-12,18-29,33-39,43-65,69-81,85-98                                                                                                                                                  
+  frais.js          |      90 |      100 |     100 |      90 | 16-17                                                                                                                                                                               
+  notifcation.js    |   42.85 |        0 |       0 |   42.85 | 7-30                                                                                                                                                                                
+  order.js          |   11.06 |        0 |       0 |   11.11 | 13-59,63-93,99-126,130-247,251-295,300-332,338-373,378-406,411-484,488-498,502-517,521-537,541-546,550-565,569-581,585-604                                                          
+  payment.js        |   41.66 |      100 |       0 |   41.66 | 6-33                                                                                                                                                                                
+  product.js        |   16.25 |        0 |    6.25 |   16.33 | 22-25,31-39,53-54,58-98,102-197,202-240,244-299,303-343,348-387,393-436,442-457,463-476                                                                                             
+  productpicture.js |   19.35 |        0 |       0 |   19.67 | 13-16,23-32,38-60,65-88,92-109                                                                                                                                                      
+  promotion.js      |   34.72 |       10 |    23.8 |   34.72 | 12-17,44-45,49-58,62-75,79-91,96-114,118-131,135-148                                                                                                                                
+  sendemail.js      |       0 |        0 |       0 |       0 |                                                                                                                                                                                     
+  size.js           |   70.58 |     62.5 |   68.75 |   70.58 | 17-18,27-28,43-44,56-61,72-77,88-94                                                                                                                                                 
+  user.js           |   11.65 |        0 |       0 |   11.68 | 15-30,33-35,38-39,45-48,52-73,77-98,102-122,126-138,144-187,193-229,235-255,259-292,298-319,323-345,349-381,385-398,403-418,422-438,444-470,476-489,493-530,537-548,552-567,571-597 
+  veriftoken.js     |     100 |      100 |     100 |     100 |                                                                                                                                                                                     
+  wishlist.js       |    20.4 |        0 |       0 |    20.4 | 8-20,24-62,68-75,79-86                                                                                                                                                              
+--------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Test Suites: 5 passed, 5 total
+Tests:       62 passed, 62 total
+Snapshots:   0 total
+Time:        5.745 s
+Ran all test suites.

@@ -1,0 +1,11 @@
+{
+  "name": "Bridgewear isolated local API",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:3001",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}
