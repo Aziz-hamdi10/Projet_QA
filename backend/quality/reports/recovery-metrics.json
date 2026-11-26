@@ -1,17 +1,1 @@
-{
-  "injectedWriteFailure": {
-    "httpStatus": 500,
-    "retryStatus": 201
-  },
-  "mongoOutage": {
-    "beforeStatus": 200,
-    "persistedId": "6b076d43330525b232aa18fa",
-    "duringStatus": 500,
-    "failureResponseMs": 2564,
-    "afterStatus": 200,
-    "restartToFirstSuccessMs": 1710,
-    "observedOutageMs": 4274,
-    "originalRecordPreserved": true,
-    "afterWriteStatus": 201
-  }
-}
+{}

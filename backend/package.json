@@ -7,7 +7,7 @@
     "test": "jest --runInBand",
     "test:unit": "jest tests/unit --runInBand",
     "test:integration": "jest tests/integration --runInBand",
-    "test:coverage": "jest --coverage --runInBand",
+    "test:coverage": "jest --runInBand --coverage --coverageReporters=lcov --coverageReporters=text",
     "test:report": "jest tests/unit --coverage --runInBand --json --outputFile=quality/reports/unit-results.json",
     "test:integration:report": "jest tests/integration --runInBand --json --outputFile=quality/reports/integration-results.json",
     "test:api": "newman run quality/postman/collection.json -e quality/postman/environment.json -r cli,json,htmlextra --reporter-json-export quality/reports/api-results.json --reporter-htmlextra-export quality/reports/api-report.html",
@@ -18,7 +18,9 @@
     "test:reliability": "jest tests/reliability --runInBand --json --outputFile=quality/reports/reliability-results.json",
     "test:sast": "set PYTHONUTF8=1&& semgrep scan --config=p/javascript --config=p/nodejs --config=p/owasp-top-ten --metrics=off --json --output=quality/reports/sast-report.json .",
     "test:dast": "newman run quality/postman/collection.json -e quality/postman/environment.json",
-    "test:functional": "jest tests/functional --runInBand --json --outputFile=quality/reports/functional-results.json"
+    "test:functional": "jest tests/functional --runInBand --json --outputFile=quality/reports/functional-results.json",
+    "test:quality": "npx @sonar/scan",
+    "test:portability": "newman run quality/postman/collection.json -e quality/postman/environment.json --env-var base_url=http://127.0.0.1:3000 -r cli,json --reporter-json-export quality/reports/portability-results.json"
   },
   "author": "",
   "license": "ISC",
@@ -35,6 +37,7 @@
     "nodemailer": "^10.6.1"
   },
   "devDependencies": {
+    "@sonar/scan": "^5.1.0",
     "jest": "^30.5.2",
     "mongodb-memory-server": "^11.4.0",
     "newman": "^6.2.3",
