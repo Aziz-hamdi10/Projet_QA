@@ -17,7 +17,8 @@
     "test:concurrency": "jest tests/concurrency --runInBand --json --outputFile=quality/reports/concurrency-results.json",
     "test:reliability": "jest tests/reliability --runInBand --json --outputFile=quality/reports/reliability-results.json",
     "test:sast": "set PYTHONUTF8=1&& semgrep scan --config=p/javascript --config=p/nodejs --config=p/owasp-top-ten --metrics=off --json --output=quality/reports/sast-report.json .",
-    "test:dast": "newman run quality/postman/collection.json -e quality/postman/environment.json"
+    "test:dast": "newman run quality/postman/collection.json -e quality/postman/environment.json",
+    "test:functional": "jest tests/functional --runInBand --json --outputFile=quality/reports/functional-results.json"
   },
   "author": "",
   "license": "ISC",
