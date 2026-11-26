@@ -1,0 +1,9 @@
+.venv-sast/
+node_modules/
+.git/
+coverage/
+quality/
+tests/
+uploads/
+*.log
+*.min.js

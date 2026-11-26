@@ -1,0 +1,6 @@
+.venv-sast/
+.venv*/
+.env
+.env.*
+*.env
+!.env.example
